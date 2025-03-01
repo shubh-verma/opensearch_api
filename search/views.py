@@ -7,8 +7,8 @@ from rest_framework.decorators import action
 from django.db.models import Q
 from rest_framework import status
 
-from search_api.models import Actor, Film
-from search_api.serializers import ActorSerializer, FilmSerializer
+from search.models import Actor, Film
+from search.serializers import ActorSerializer, FilmSerializer
 
 
 class SearchViewSet(ViewSet):
