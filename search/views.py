@@ -11,20 +11,33 @@ from search.models import Actor, Film
 from search.serializers import ActorSerializer, FilmSerializer
 
 
-class SearchViewSet(ViewSet):
+class ActorSearchViewSet(ViewSet):
     @action(detail=False, methods=['get'])
     def search(self, request):
-        query = request.query_params.get("q", "")
+        actor_search = request.query_params.get("q", "")
 
-        if not query:
+        if not actor_search:
             return Response({"error": "Query parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
-        actors = Actor.objects.filter(Q(first_name__icontains = query) | Q(last_name__icontains = query))
+        
+        actors = Actor.objects.filter(Q(first_name__icontains = actor_search) | Q(last_name__icontains = actor_search))
         actor_data = ActorSerializer(actors, many=True).data
 
-        films = Film.objects.filter(Q(title__icontains = query))
+        return Response({
+            "actors":actor_data,
+        })
+
+
+class FilmsSearchViewSet(ViewSet):
+    @action(detail=False, methods=['get'])
+    def search(self, request):
+        film_search = request.query_params.get("q", "")
+
+        if not film_search:
+            return Response({"error": "Query parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        films = Film.objects.filter(Q(title__icontains = film_search))
         film_data = FilmSerializer(films, many=True).data
         
         return Response({
-            "actors":actor_data,
             "films": film_data
         })

@@ -1,6 +1,7 @@
 from django.urls import path
-from search.views import SearchViewSet
+from search.views import ActorSearchViewSet, FilmsSearchViewSet
 
 urlpatterns = [
-    path('', SearchViewSet.as_view({'get': 'search'}), name='search'),
+    path(r'actor', ActorSearchViewSet.as_view({'get': 'search'}), name='actor_search'),
+    path(r'films', FilmsSearchViewSet.as_view({'get': 'search'}), name='films_search'),
 ]
