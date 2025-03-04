@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 djangorestframework = "*"
 psycopg2 = "*"
+opensearch-py = "*"
+django-opensearch-dsl = "*"
 
 [dev-packages]
 

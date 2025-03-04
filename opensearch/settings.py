@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_opensearch_dsl',
     'opensearch',
     'search',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +55,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'opensearch.urls'
+
+OPENSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://localhost:9200',  # Change if your OpenSearch server is different
+    },
+}
+
 
 TEMPLATES = [
     {
@@ -94,6 +103,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

@@ -1,15 +1,27 @@
 services:
   postgres:
     image: postgres:15-alpine
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=shubham@123
       - POSTGRES_DB=dvdrental
+    # tmpfs:
+    #   - /var/lib/postgresql/data
+  opensearch:
+    image: opensearchproject/opensearch:2.19.0
     ports:
-      - "5432:5432"
-    tmpfs:
-      - /var/lib/postgresql/data
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - DISABLE_SECURITY_PLUGIN=true
+      # - OPENSEARCH_INITIAL_ADMIN_PASSWORD=qwMN%$0O0
 
-       
-
-       
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.19.0
+    ports:
+      - "5601:5601" # Dashboard for node1
+    environment:
+      - OPENSEARCH_HOSTS=["http://opensearch:9200"]
+      - DISABLE_SECURITY_DASHBOARDS_PLUGIN=true # disables security dashboards plugin in OpenSearch Dashboards
